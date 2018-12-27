@@ -1,6 +1,8 @@
 package com.joe.joe_github_test.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,11 +19,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override val layoutResourceId: Int = R.layout.activity_main
     private val mainViewModelFactory: MainViewModelFactory by inject()
     private val userAdapter: UserAdapter by inject()
-    private val username = "whtjdhks3837"
+    private var username = "whtjdhks383"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel = ViewModelProviders.of(this, mainViewModelFactory).get(MainViewModel::class.java)
+
+        if (Intent.ACTION_VIEW == intent.action) {
+            intent.data.getQueryParameter("username")?.let {
+                username = it
+            }
+        }
 
         viewDataBinding.repoList.apply {
             layoutManager = LinearLayoutManager(context)
@@ -34,19 +42,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         })
 
         viewModel.repos.observe(this, Observer {
-            viewModel.progress.value = false
+            viewModel.setProgress(false)
             userAdapter.setRepos(it)
         })
 
         viewModel.error.observe(this, Observer {
-            viewModel.progress.value = false
+            viewModel.setProgress(false)
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
 
         viewDataBinding.viewmodel = viewModel
         viewDataBinding.setLifecycleOwner(this)
 
-        viewModel.progress.value = true
+        viewModel.setProgress(true)
         viewModel.getUserInfo(username)
     }
 }

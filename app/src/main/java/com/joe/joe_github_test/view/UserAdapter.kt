@@ -15,16 +15,10 @@ class UserAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            0 -> {
-                val inflater = LayoutInflater.from(parent.context)
-                val binding = UserItemBinding.inflate(inflater, parent, false)
-                UserHolder(context, binding)
-            }
-            else -> {
-                val inflater = LayoutInflater.from(parent.context)
-                val binding = RepoListItemBinding.inflate(inflater, parent, false)
-                ReposHolder(context, binding)
-            }
+            0 -> UserViewHolder(context, UserItemBinding.
+                inflate(LayoutInflater.from(parent.context), parent, false))
+            else -> ReposViewHolder(context, RepoListItemBinding.
+                inflate(LayoutInflater.from(parent.context), parent, false))
         }
     }
 
@@ -36,12 +30,8 @@ class UserAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
-            0 -> {
-                (holder as UserHolder).bind(user)
-            }
-            else -> {
-                (holder as ReposHolder).bind(repos[position])
-            }
+            0 -> (holder as UserViewHolder).bind(user)
+            else -> (holder as ReposViewHolder).bind(repos[position])
         }
     }
 
