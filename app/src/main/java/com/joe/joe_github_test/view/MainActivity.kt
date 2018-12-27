@@ -20,16 +20,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private val mainViewModelFactory: MainViewModelFactory by inject()
     private val userAdapter: UserAdapter by inject()
     private var username = "whtjdhks3837"
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel = ViewModelProviders.of(this, mainViewModelFactory).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, mainViewModelFactory).get(MainViewModel::class.java)
 
-        if (Intent.ACTION_VIEW == intent.action) {
-            intent.data.getQueryParameter("username")?.let {
-                username = it
-            }
-        }
+        getDeeplinkUsername()
+        viewModelBinding()
+        loadUser()
 
         viewDataBinding.repoList.apply {
             layoutManager = LinearLayoutManager(context)
@@ -50,10 +49,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             viewModel.setProgress(false)
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
+    }
 
+    private fun getDeeplinkUsername() = if (Intent.ACTION_VIEW == intent.action) {
+        intent.data.getQueryParameter("username")?.let {
+            username = it
+        }
+    } else { }
+
+    private fun viewModelBinding() {
         viewDataBinding.viewmodel = viewModel
         viewDataBinding.setLifecycleOwner(this)
+    }
 
+    private fun loadUser() {
         viewModel.setProgress(true)
         viewModel.getUserInfo(username)
     }
