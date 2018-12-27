@@ -19,7 +19,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override val layoutResourceId: Int = R.layout.activity_main
     private val mainViewModelFactory: MainViewModelFactory by inject()
     private val userAdapter: UserAdapter by inject()
-    private var username = "whtjdhks383"
+    private var username = "whtjdhks3837"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
