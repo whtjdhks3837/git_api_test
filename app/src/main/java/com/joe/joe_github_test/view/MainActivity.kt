@@ -2,13 +2,11 @@ package com.joe.joe_github_test.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joe.joe_github_test.R
-import com.joe.joe_github_test.data.User
 import com.joe.joe_github_test.databinding.ActivityMainBinding
 import com.joe.joe_github_test.viewmodel.MainViewModel
 import com.joe.joe_github_test.viewmodel.MainViewModelFactory
@@ -19,14 +17,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override val layoutResourceId: Int = R.layout.activity_main
     private val mainViewModelFactory: MainViewModelFactory by inject()
     private val userAdapter: UserAdapter by inject()
-    private var username = "whtjdhks3837"
+    private lateinit var username: String
     private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this, mainViewModelFactory).get(MainViewModel::class.java)
 
-        getDeeplinkUsername()
+        username = getDeeplinkUsername()
         viewModelBinding()
         loadUser()
 
@@ -52,10 +50,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun getDeeplinkUsername() = if (Intent.ACTION_VIEW == intent.action) {
-        intent.data.getQueryParameter("username")?.let {
-            username = it
-        }
-    } else { }
+        intent.data.path?.removeRange(0, 1)?: ""
+    } else {
+        ""
+    }
 
     private fun viewModelBinding() {
         viewDataBinding.viewmodel = viewModel
