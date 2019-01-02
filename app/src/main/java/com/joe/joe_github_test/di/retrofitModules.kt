@@ -1,7 +1,6 @@
 package com.joe.joe_github_test.di
 
 import com.joe.joe_github_test.api.RetrofitService
-import io.reactivex.schedulers.Schedulers.single
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

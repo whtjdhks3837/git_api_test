@@ -4,7 +4,7 @@ import android.content.Context
 import com.joe.joe_github_test.data.Repo
 import com.joe.joe_github_test.databinding.RepoListItemBinding
 
-class ReposViewHolder(private val context: Context, private val binding: RepoListItemBinding) :
+class ReposViewHolder(private val binding: RepoListItemBinding) :
     BaseViewHolder<Repo>(binding) {
 
     override fun bind(repo: Repo) {

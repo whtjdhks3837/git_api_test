@@ -31,7 +31,6 @@ class MainViewModel(private val repository: Repository) : BaseViewModel() {
                     else
                         _error.value = "유저를 찾을 수 없습니다."
                 }, {
-                    it.printStackTrace()
                     _error.value = "유저를 찾을 수 없습니다."
                 })
         )
@@ -45,8 +44,9 @@ class MainViewModel(private val repository: Repository) : BaseViewModel() {
                 .subscribe({
                     if (!it.isEmpty())
                         _repos.value = it
+                    else
+                        _error.value = "레포지토리가 없습니다."
                 }, {
-                    it.printStackTrace()
                     _error.value = "서버연결에 실패했습니다."
                 })
         )

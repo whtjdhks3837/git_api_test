@@ -9,16 +9,18 @@ import com.joe.joe_github_test.data.User
 import com.joe.joe_github_test.databinding.RepoListItemBinding
 import com.joe.joe_github_test.databinding.UserItemBinding
 
-class UserAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class UserAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var user: User
     private val repos = mutableListOf<Repo>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            0 -> UserViewHolder(context, UserItemBinding.
-                inflate(LayoutInflater.from(parent.context), parent, false))
-            else -> ReposViewHolder(context, RepoListItemBinding.
-                inflate(LayoutInflater.from(parent.context), parent, false))
+            0 -> UserViewHolder(
+                UserItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            )
+            else -> ReposViewHolder(
+                RepoListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            )
         }
     }
 

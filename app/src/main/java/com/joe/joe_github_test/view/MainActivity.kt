@@ -50,7 +50,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun getDeeplinkUsername() = if (Intent.ACTION_VIEW == intent.action) {
-        intent.data.path?.removeRange(0, 1)?: ""
+        intent.data.path?.removeRange(0, 1) ?: ""
     } else {
         ""
     }
